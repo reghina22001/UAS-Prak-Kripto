@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kriptografi UAS</title>
+  <style>
+    /* General Styling */
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-image: url('https://i.pinimg.com/736x/a1/c3/e9/a1c3e9b016f1cd54c57a56fb637f8b17.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      margin: 20px 0;
+      color: #4f0f0f;
+      text-shadow: 3px 3px 7px #fb9aac;
+    }
+
+    .section {
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      max-width: 900px;
+    }
+
+    .section h2 {
+      color: #b66878;
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input, textarea, button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 1em;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    button {
+      background-color: #b44772;
+      color: #fff;
+      font-size: 1.2em;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #6b3341;
+      transform: scale(1.05);
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-evenly;
+    }
+
+    .card {
+      flex: 1 1 calc(45% - 20px);
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      padding: 20px;
+      background-color: #ffdce5;
+      box-shadow: 0 4px 10px #ffa2b9;
+      max-width: 400px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px #ffa2b9;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .card-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+  <script src="RailFence.js"></script>
+  <script src="Rot13.js"></script>
+</head>
+<body>
+  <h1>Kriptografi: Enkripsi dan Dekripsi Teks</h1>
+  <div class="section">
+    <h2>ROT13</h2>
+    <div class="card-container">
+      <div class="card">
+        <form id="rot13-form">
+          <label for="rot13-plaintext">Input Text</label>
+          <input type="text" id="rot13-plaintext" name="rot13-plaintext" placeholder="Masukkan teks di sini...">
+          <button type="button" id="rot13-encrypt" onclick="clickRot()">Encrypt/Decrypt</button>
+          <label for="resultrot">Hasil</label>
+          <textarea readonly id="resultrot" placeholder="Hasil akan muncul di sini..."></textarea>
+          <button type="button" onclick="resetForm('rot13-form')">Reset</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Rail Fence</h2>
+    <div class="card-container">
+      <div class="card">
+        <form id="rail-fence-encrypt-form">
+          <label for="rail-fence-plaintext">Input Plaintext</label>
+          <input type="text" id="rail-fence-plaintext" name="rail-fence-plaintext" placeholder="Masukkan plaintext di sini...">
+          <label for="rail-fence-key">Key</label>
+          <input type="text" id="e-rail-fence-key" name="rail-fence-key" placeholder="Masukkan key...">
+          <label for="rail-fence-offset">Offset</label>
+          <input type="text" id="e-rail-fence-offset" name="rail-fence-offset" placeholder="Masukkan offset...">
+          <button type="button" id="rail-fence-encrypt" onclick="clickEncryptZigZag()">Encrypt</button>
+          <label for="resultencrypt">Hasil</label>
+          <textarea readonly id="resultencrypt" placeholder="Hasil enkripsi akan muncul di sini..."></textarea>
+          <button type="button" onclick="resetForm('rail-fence-encrypt-form')">Reset</button>
+        </form>
+      </div>
+      <div class="card">
+        <form id="rail-fence-decrypt-form">
+          <label for="rail-fence-ciphertext">Input Ciphertext</label>
+          <input type="text" id="rail-fence-ciphertext" name="rail-fence-ciphertext" placeholder="Masukkan ciphertext di sini...">
+          <label for="rail-fence-key">Key</label>
+          <input type="text" id="d-rail-fence-key" name="rail-fence-key" placeholder="Masukkan key...">
+          <label for="rail-fence-offset">Offset</label>
+          <input type="text" id="d-rail-fence-offset" name="rail-fence-offset" placeholder="Masukkan offset...">
+          <button type="button" id="rail-fence-decrypt" onclick="clickDecryptZigZag()">Decrypt</button>
+          <label for="resultDecrypt">Hasil</label>
+          <textarea readonly id="resultDecrypt" placeholder="Hasil dekripsi akan muncul di sini..."></textarea>
+          <button type="button" onclick="resetForm('rail-fence-decrypt-form')">Reset</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    function clickRot() {
+      const pt = document.getElementById('rot13-plaintext');
+      const hasil = document.getElementById('resultrot');
+      hasil.value = rot13(pt.value);
+      console.log(hasil.value);
+    }
+
+    function clickEncryptZigZag() {
+      const pt = document.getElementById('rail-fence-plaintext');
+      const key = document.getElementById('e-rail-fence-key');
+      const offset = document.getElementById('e-rail-fence-offset');
+      const hasil = document.getElementById('resultencrypt');
+      
+      // Convert key and offset to numbers
+      const rail = parseInt(key.value, 10);
+      const offsetValue = parseInt(offset.value, 10);
+
+      // Check if conversion is successful
+      if (isNaN(rail) || isNaN(offsetValue)) {
+          console.error("Invalid key or offset value");
+          return;
+      }
+
+      hasil.value = encryptRailFence(pt.value, rail, offsetValue);
+      console.log(hasil.value);
+    }
+
+    function clickDecryptZigZag() {
+      const pt = document.getElementById('rail-fence-ciphertext');
+      const key = document.getElementById('d-rail-fence-key');
+      const offset = document.getElementById('d-rail-fence-offset');
+      const hasil = document.getElementById('resultDecrypt');
+      
+      // Convert key and offset to numbers
+      const rail = parseInt(key.value, 10);
+      const offsetValue = parseInt(offset.value, 10);
+
+      // Check if conversion is successful
+      if (isNaN(rail) || isNaN(offsetValue)) {
+          console.error("Invalid key or offset value");
+          return;
+      }
+
+      hasil.value = decryptRailFence(pt.value, rail, offsetValue);
+      console.log(hasil.value);
+    }
+    function resetForm(formId) {
+      document.getElementById(formId).reset();
+    }
+  </script>
+</body>
+</html>
